@@ -1,5 +1,6 @@
 ﻿using BankLoan_Management133.Models;
 using BankLoan_Management133.Repository;
+using BankLoan_Management133.Repositoryy.Models;
 using System.Collections.Generic;
 
 namespace BankLoan_Management133.BusinessLogic
@@ -13,12 +14,12 @@ namespace BankLoan_Management133.BusinessLogic
             _customerRepository = customerRepository;
         }
 
-        public CustomerEntity GetCustomerById(int id)
+        public customer GetCustomerById(int id)
         {
             return _customerRepository.GetCustomerById(id);
         }
 
-        public void SaveCustomer(CustomerEntity obj)
+        public void SaveCustomer(customer obj)
         {
             if (obj.CustomerId > 0)
             {
@@ -30,7 +31,22 @@ namespace BankLoan_Management133.BusinessLogic
             }
         }
 
-        public List<CustomerEntity> GetAllCustomers()
+        public customer GetCustomerByEmail(string email)
+        {
+            return _customerRepository.GetByEmail(email);
+        }
+        public bool Login(string email,string password)
+        {
+            var data = _customerRepository.GetByEmail(email);
+            return data != null && data.Passward == password;
+        }
+
+        public void UpdateCustomerProfile(customer profile)
+        {
+            _customerRepository.UpdateCustomer(profile);
+            _customerRepository.Save();
+        }
+        public List<customer> GetAllCustomers()
         {
             return _customerRepository.GetAllCustomers();
         }

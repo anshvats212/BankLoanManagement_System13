@@ -1,0 +1,54 @@
+﻿@model BankLoan_Management133.Repositoryy.Models.customer
+
+@{
+    ViewData["Title"] = "Customer Dashboard";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-lg p-5">
+        <div class="dashboard-header mb-4">
+            <h1 class="text-primary text-center">Welcome, @Model.Name!</h1>
+            <hr class="border-primary" />
+        </div>
+
+        <div>
+            <h4 class="mb-3 text-info">Your Profile Information</h4>
+            <dl class="row">
+                <dt class="col-sm-4 fw-bold">
+                    Name
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Name
+                </dd>
+                <dt class="col-sm-4 fw-bold">
+                    Email
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Email
+                </dd>
+                <dt class="col-sm-4 fw-bold">
+                    Phone Number
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Phone
+                </dd>
+                <dt class="col-sm-4 fw-bold">
+                    Address
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Address
+                </dd>
+                <dt class="col-sm-4 fw-bold">
+                    KYC Status
+                </dt>
+                <dd class="col-sm-8">
+                    <span class="badge bg-success">@Model.KycStatus</span>
+                </dd>
+            </dl>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a asp-action="Edit" asp-route-CustomerId="@Model.CustomerId" class="btn btn-primary btn-lg rounded-pill">Edit Profile</a>
+        </div>
+    </div>
+</div>

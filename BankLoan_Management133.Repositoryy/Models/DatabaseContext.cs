@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BankLoan_Management133.Repositoryy.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankLoan_Management133.Models
 {
@@ -6,9 +7,6 @@ namespace BankLoan_Management133.Models
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> contextOptions) : base(contextOptions) { }
  
-        public DbSet<CustomerEntity> customerEntities { get; set; }
-        public DbSet<LoanApplication> loanApplications { get; set; }
-        public DbSet<LoanProduct> loanProducts { get; set; }
-        public DbSet<Repayment> repayments { get; set; }
+        public DbSet<customer> customers { get; set; }
     }
 }

@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Customer Login";
+}
+
+<div class="container-fluid bg-light py-5" style="min-height: 100vh;">
+    <div class="row justify-content-center align-items-center" style="min-height: inherit;">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg rounded-lg">
+                <div class="card-body p-5">
+                    <div class="login-header text-center mb-5">
+                        <h2 class="text-primary"><i class="bi bi-person-circle me-2"></i> Customer Login</h2>
+                        <hr class="border-primary w-50 mx-auto" />
+                        <p class="text-muted mt-2">Welcome back! Please enter your credentials.</p>
+                    </div>
+                    <form asp-action="Login" method="post">
+                        <div class="mb-3">
+                            <label for="email" class="form-label"><i class="bi bi-envelope-fill me-2"></i> Email</label>
+                            <input type="email" id="email" name="email" class="form-control form-control-lg rounded-pill" placeholder="Your Email Address" />
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label"><i class="bi bi-key-fill me-2"></i> Password</label>
+                            <input type="password" id="password" name="password" class="form-control form-control-lg rounded-pill" placeholder="Your Password" />
+                        </div>
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">
+                                <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <p class="mb-0">
+                                Need an account? <a asp-action="Index" class="text-info">Register here</a>
+                            </p>
+                            <p class="mt-2">
+                                <a href="#" class="text-secondary">Forgot Password?</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+    .bg-light {
+        background-color: #f8f9fa !important; /* A very light grey */
+    }
+
+    .card {
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Standard Bootstrap primary */
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .text-primary {
+        color: #007bff !important;
+    }
+
+    .border-primary {
+        border-color: #007bff !important;
+        border-width: 2px;
+    }
+
+    .form-control::placeholder {
+        color: #aaa;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
