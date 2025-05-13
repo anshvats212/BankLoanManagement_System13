@@ -10,5 +10,6 @@ namespace BankLoan_Management133.Models
         public DatabaseContext(DbContextOptions<DatabaseContext> contextOptions) : base(contextOptions) { }
 
         public DbSet<customer> customers { get; set; }
+        public DbSet<LoanProduct> LoanProducts { get; set; }
     }
 }

@@ -4,6 +4,11 @@ using BankLoan_Management133.Repository;
 using BankLoan_Management133.BusinessLogic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BankLoan_Management133.BusinessLogicc.Implementation;
+using BankLoan_Management133.BusinessLogicc.Interfaces;
+using BankLoan_Management133.Repositoryy.Implementation;
+using BankLoan_Management133.Repositoryy.Interfaces;
+using BankLoan_Management133.Repositoryy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +18,9 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("abc"))
 );
 
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add Identity services
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
@@ -21,6 +29,9 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 // Register the repository and business logic
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IBusinessLogic, CustomerBusinessLogic>();
+
+builder.Services.AddScoped<ILoanProductRepository, LoanProductRepository>();
+builder.Services.AddScoped<ILoanProductService, LoanProductService>();
 
 var app = builder.Build();
 
