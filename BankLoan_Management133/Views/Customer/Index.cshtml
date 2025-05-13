@@ -1,7 +1,7 @@
-﻿@model BankLoan_Management133.Repositoryy.Models.customer
+﻿@model BankLoan_Management133.Models.RegisterViewModel
 
 @{
-    ViewData["Title"] = ViewBag.st == "Submit" ? "Register as Customer" : "Edit Customer";
+    ViewData["Title"] = "Register as Customer";
 }
 
 <div class="container mt-5">
@@ -13,25 +13,30 @@
                 </div>
                 <div class="card-body">
                     <form asp-action="Index" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        <input type="hidden" asp-for="CustomerId" />
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
                         <div class="mb-3">
                             <label asp-for="Name" class="form-label"><i class="bi bi-person-fill me-2"></i> Full Name</label>
-                            <input asp-for="Name" class="form-control form-control-lg rounded-pill" placeholder="Enter your full name" />
+                            <input asp-for="Name" class="form-control form-control-lg rounded-pill" placeholder="Enter your full name" required />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Email" class="form-label"><i class="bi bi-envelope-fill me-2"></i> Email Address</label>
-                            <input asp-for="Email" class="form-control form-control-lg rounded-pill" placeholder="Enter your email address" />
+                            <input asp-for="Email" class="form-control form-control-lg rounded-pill" placeholder="Enter your email address" required />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Passward" class="form-label"><i class="bi bi-key-fill me-2"></i> Password</label>
-                            <input asp-for="Passward" class="form-control form-control-lg rounded-pill" placeholder="Enter your password" />
-                            <span asp-validation-for="Passward" class="text-danger"></span>
+                            <label asp-for="Password" class="form-label"><i class="bi bi-key-fill me-2"></i> Password</label>
+                            <input asp-for="Password" class="form-control form-control-lg rounded-pill" placeholder="Enter your password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label"><i class="bi bi-key-fill me-2"></i> Confirm Password</label>
+                            <input asp-for="ConfirmPassword" class="form-control form-control-lg rounded-pill" placeholder="Confirm your password" required />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
@@ -46,19 +51,20 @@
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
 
+
                         <div class="mb-3">
-                            <label asp-for="KycStatus" class="form-label"><i class="bi bi-check-circle-fill me-2"></i> Kyc Status</label>
-                            <input asp-for="KycStatus" class="form-control form-control-lg rounded-pill" placeholder="Enter your Status" />
-                            <span asp-validation-for="KycStatus" class="text-danger"></span>
+                            <label asp-for="Kyc" class="form-label"><i class="bi bi-house-fill me-2"></i>Kyc</label>
+                            <input asp-for="Kyc" class="form-control form-control-lg rounded-pill" placeholder="Enter your Kyc Status" />
+                            <span asp-validation-for="Kyc" class="text-danger"></span>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">@ViewBag.st</button>
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">Register</button>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer text-center py-3">
-                    <a asp-action="Show" class="text-info"><i class="bi bi-arrow-left-circle-fill me-2"></i> Back to Customer List</a>
+                    <p class="mb-0">Already have an account? <a asp-action="Login" class="text-info"><i class="bi bi-box-arrow-in-right-fill me-2"></i> Log in</a></p>
                 </div>
             </div>
         </div>

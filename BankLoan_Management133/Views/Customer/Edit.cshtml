@@ -1,59 +1,79 @@
 ﻿@model BankLoan_Management133.Repositoryy.Models.customer
 
 @{
-    ViewData["Title"] = "Edit Profile";
+    ViewData["Title"] = ViewBag.st == "Submit" ? "Register as Customer" : "Edit Customer";
 }
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 edit-container">
+        <div class="col-md-8 col-lg-6">
             <div class="card shadow-lg rounded-lg p-4">
-                <div class="edit-profile-header mb-4">
-                    <h2 class="text-center text-primary">Edit Your Profile</h2>
-                    <hr class="border-primary" />
+                <div class="card-header bg-primary text-white rounded-top">
+                    <h2 class="text-center mb-0">@ViewData["Title"]</h2>
                 </div>
-                <form asp-action="Edit" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                    <input type="hidden" asp-for="CustomerId" />
-                    <input type="hidden" asp-for="Email" value="@Model.Email" />
-                    <input type="hidden" asp-for="Passward" value="@Model.Passward" />
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="CustomerId" />
 
-                    <div class="mb-3">
-                        <label asp-for="Name" class="form-label">Full Name</label>
-                        <input asp-for="Name" class="form-control form-control-lg rounded-pill" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"><i class="bi bi-person-fill me-2"></i> Full Name</label>
+                            <input asp-for="Name" class="form-control form-control-lg rounded-pill" placeholder="Enter your full name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Phone" class="form-label">Phone Number</label>
-                        <input asp-for="Phone" class="form-control form-control-lg rounded-pill" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
-                    </div>
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"><i class="bi bi-envelope-fill me-2"></i> Email Address</label>
+                            <input asp-for="Email" class="form-control form-control-lg rounded-pill" placeholder="Enter your email address" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Address" class="form-label">Specialty</label>
-                        <input asp-for="Address" class="form-control form-control-lg rounded-pill" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
-                    </div>
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label"><i class="bi bi-telephone-fill me-2"></i> Phone Number</label>
+                            <input asp-for="Phone" class="form-control form-control-lg rounded-pill" placeholder="Enter your phone number" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="KycStatus" class="form-label">Qualification</label>
-                        <input asp-for="KycStatus" class="form-control form-control-lg rounded-pill" />
-                        <span asp-validation-for="KycStatus" class="text-danger"></span>
-                    </div>
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label"><i class="bi bi-house-fill me-2"></i> Address/Specialty</label>
+                            <input asp-for="Address" class="form-control form-control-lg rounded-pill" placeholder="Enter your address or specialty" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg rounded-pill">Update Profile</button>
-                    </div>
+                        <div class="mb-3">
+                            <label asp-for="KycStatus" class="form-label"><i class="bi bi-house-fill me-2"></i>Kyc</label>
+                            <input asp-for="KycStatus" class="form-control form-control-lg rounded-pill" placeholder="Enter your Kyc Status" />
+                            <span asp-validation-for="KycStatus" class="text-danger"></span>
+                        </div>
 
-                    <div class="mt-3 text-center">
-                        <a asp-action="Dashboard" asp-route-CustomerId="@Model.CustomerId" class="btn btn-secondary rounded-pill">Back to Dashboard</a>
-                    </div>
-                </form>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">@ViewBag.st</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <a asp-action="Dashboard" class="text-info"><i class="bi bi-arrow-left-circle-fill me-2"></i> Back to Dashboard</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+    .card {
+        border: none;
+    }
+
+    .card-header {
+        border-bottom: none;
+    }
+
+    .form-label i {
+        color: #007bff; /* Primary color for icons */
+    }
+</style>
 
 @section Scripts {
     @{

@@ -1,4 +1,5 @@
-﻿using BankLoan_Management133.Models;
+﻿// C:\bankLoanmanagement133copy\BankLoan_Management133\BankLoan_Management133.BusinessLogicc\CustomerBusinessLogic.cs
+using BankLoan_Management133.Models;
 using BankLoan_Management133.Repository;
 using BankLoan_Management133.Repositoryy.Models;
 using System.Collections.Generic;
@@ -35,11 +36,11 @@ namespace BankLoan_Management133.BusinessLogic
         {
             return _customerRepository.GetByEmail(email);
         }
-        public bool Login(string email,string password)
-        {
-            var data = _customerRepository.GetByEmail(email);
-            return data != null && data.Passward == password;
-        }
+        // public bool Login(string email,string password) // Removed
+        // {
+        //     var data = _customerRepository.GetByEmail(email);
+        //     return data != null && data.Passward == password;
+        // }
 
         public void UpdateCustomerProfile(customer profile)
         {
