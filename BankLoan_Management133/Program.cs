@@ -8,7 +8,7 @@ using BankLoan_Management133.BusinessLogicc.Implementation;
 using BankLoan_Management133.BusinessLogicc.Interfaces;
 using BankLoan_Management133.Repositoryy.Implementation;
 using BankLoan_Management133.Repositoryy.Interfaces;
-using BankLoan_Management133.Repositoryy.Data;
+using BankLoan_Management133.Repositoryy.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

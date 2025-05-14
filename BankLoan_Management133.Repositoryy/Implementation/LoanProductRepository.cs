@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BankLoan_Management133.Models;
-using BankLoan_Management133.Repositoryy.Data;
+using BankLoan_Management133.Repositoryy.Models;
 using BankLoan_Management133.Repositoryy.Interfaces;
 using BankLoan_Management133.Repositoryy.Models;
 
