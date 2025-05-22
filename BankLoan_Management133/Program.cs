@@ -35,9 +35,6 @@ builder.Services.AddScoped<IBusinessLogic, CustomerBusinessLogic>();
 builder.Services.AddScoped<ILoanProductRepository, LoanProductRepository>();
 builder.Services.AddScoped<ILoanProductService, LoanProductService>();
 
-builder.Services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
-builder.Services.AddScoped<ILoanApplicationService, LoanApplicationService>(); // Corrected namespace
-
 builder.Services.AddScoped<ILoanApplicationRepository1, LoanApplicationRepository1>();
 builder.Services.AddScoped<ILoanApplicationService1, LoanApplicationService1>();
 
