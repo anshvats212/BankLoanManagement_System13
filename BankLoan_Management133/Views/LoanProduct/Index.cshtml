@@ -4,6 +4,7 @@
 @model IEnumerable<LoanProduct>
 
 @{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     ViewData["Title"] = "Index";
 }
 @if (TempData["success"] != null)

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BankLoan_Management133.Repositoryy.Models.LoanApplicationEntites>
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h2>Pending Loan Applications</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Application ID</th>
+                <th>Customer ID</th>
+                <th>Loan Product ID</th>
+                <th>Loan Amount</th>
+                <th>Application Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var application in Model.Where(a => a.ApprovalStatus == "PENDING"))
+            {
+                <tr>
+                    <td>@application.ApplicationId</td>
+                    <td>@application.CustomerId</td>
+                    <td>@application.Id</td>
+                    <td>@application.LoanAmount</td>
+                    <td>@application.ApplicationDate</td>
+                    <td>
+                        <a href="@Url.Action("Process", "LoanApplication1", new { applicationId = application.ApplicationId })" class="btn btn-sm btn-primary">Process</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No pending loan applications.</p>
+}

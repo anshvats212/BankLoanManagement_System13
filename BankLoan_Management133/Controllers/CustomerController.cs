@@ -1,10 +1,10 @@
-﻿// C:\bankLoanmanagement133copy\BankLoan_Management133\BankLoan_Management133\Controllers\CustomerController.cs
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BankLoan_Management133.Models;
 using BankLoan_Management133.BusinessLogic;
 using BankLoan_Management133.Repositoryy.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Numerics;
+using System.Linq;
+using System.Security.Claims;
 
 namespace BankLoan_Management133.Controllers
 {
@@ -24,7 +24,7 @@ namespace BankLoan_Management133.Controllers
         // Registration Actions
         public IActionResult Index()
         {
-            return View(); // Now the view expects RegisterViewModel, and we're passing an empty one (implicitly)
+            return View();
         }
 
         [HttpPost]
@@ -48,11 +48,11 @@ namespace BankLoan_Management133.Controllers
                     };
                     _businessLogic.SaveCustomer(customer); // Use your existing logic to save customer details
 
-                    // Sign in the user after registration
-                    _signInManager.SignInAsync(user, isPersistent: false).Wait(); // Synchronous call
+                    // Sign in the user and add CustomerId as a claim
+                    SignInAndAddCustomerIdClaim(user, customer.CustomerId, false);
 
                     // Redirect to the Dashboard after successful registration and sign-in
-                    return RedirectToAction("Login", new { customerid = _businessLogic.GetCustomerByEmail(model.Email)?.CustomerId });
+                    return RedirectToAction("Dashboard");
                 }
                 else
                 {
@@ -80,8 +80,27 @@ namespace BankLoan_Management133.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Redirect to the dashboard or another appropriate page upon successful login
-                    return RedirectToAction("Dashboard", new { customerid = _businessLogic.GetCustomerByEmail(email)?.CustomerId });
+                    var user = _userManager.FindByEmailAsync(email).Result; // Synchronous call
+                    if (user != null)
+                    {
+                        var customer = _businessLogic.GetCustomerByEmail(email);
+                        if (customer != null)
+                        {
+                            // Ensure the CustomerId claim is present after login
+                            var existingCustomerIdClaim = _userManager.GetClaimsAsync(user).Result; // Synchronous call
+                            if (!existingCustomerIdClaim.Any(c => c.Type == "CustomerId"))
+                            {
+                                AddCustomerIdClaim(user, customer.CustomerId);
+                            }
+                            return RedirectToAction("Dashboard");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Customer profile not found for this user.");
+                            return View();
+                        }
+                    }
+                    return RedirectToAction("Dashboard"); // Should not reach here if user is null
                 }
                 else
                 {
@@ -93,16 +112,30 @@ namespace BankLoan_Management133.Controllers
             return View();
         }
 
-
-        public IActionResult Dashboard(int? customerid) // Receive customerid as an integer (nullable)
+        public IActionResult Dashboard()
         {
-            if (customerid == null)
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
             {
-                return NotFound(); // Or handle the case where customerid is missing
+                return RedirectToAction("Login"); // Or handle unauthenticated access
             }
 
-            var customer = _businessLogic.GetCustomerById(customerid.Value); // Fetch customer by ID
+            var user = _userManager.FindByIdAsync(userId).Result; // Synchronous call
+            if (user == null)
+            {
+                return RedirectToAction("Login"); // Handle user not found
+            }
 
+            var customerIdClaim = User.Claims.FirstOrDefault(c => c.Type == "CustomerId")?.Value;
+
+            if (string.IsNullOrEmpty(customerIdClaim) || !int.TryParse(customerIdClaim, out int customerId))
+            {
+                // This should ideally not happen if the claim was added during login/registration
+                // Log an error or redirect to an error page
+                return RedirectToAction("Login"); // Or handle the error appropriately
+            }
+
+            var customer = _businessLogic.GetCustomerById(customerId);
             if (customer == null)
             {
                 return NotFound(); // Or handle the case where the customer is not found
@@ -138,7 +171,7 @@ namespace BankLoan_Management133.Controllers
             if (ModelState.IsValid)
             {
                 _businessLogic.UpdateCustomerProfile(model);
-                return RedirectToAction("Dashboard", new { customerid = model.CustomerId });
+                return RedirectToAction("Dashboard"); // Redirect to dashboard, ID is in claims now
             }
             ViewBag.st = "Update";
             return View(model); // Explicitly return the Edit view on validation failure
@@ -149,8 +182,32 @@ namespace BankLoan_Management133.Controllers
         {
             var data = _businessLogic.GetAllCustomers();
             return View(data); ;
+        }
 
-            // ... other actions ...
+        private void SignInAndAddCustomerIdClaim(IdentityUser user, int customerId, bool isPersistent)
+        {
+            _signInManager.SignInAsync(user, isPersistent).Wait(); // Synchronous call
+            AddCustomerIdClaim(user, customerId);
+        }
+
+        private void AddCustomerIdClaim(IdentityUser user, int customerId)
+        {
+            var claim = new Claim("CustomerId", customerId.ToString());
+            _userManager.AddClaimAsync(user, claim).Wait(); // Synchronous call
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            _signInManager.SignOutAsync().Wait(); // Synchronous call
+            return RedirectToAction("Login"); // Redirect to the login page after logout
+        }
+
+        // You might also have a GET action for logout if you prefer a link
+        public IActionResult LogoutGet()
+        {
+            _signInManager.SignOutAsync().Wait(); // Synchronous call
+            return RedirectToAction("Login"); // Redirect to the login page after logout
         }
     }
 }

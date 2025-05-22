@@ -5,7 +5,7 @@
 namespace BankLoan_Management133.Repositoryy.Migrations
 {
     /// <inheritdoc />
-    public partial class a4 : Migration
+    public partial class s3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

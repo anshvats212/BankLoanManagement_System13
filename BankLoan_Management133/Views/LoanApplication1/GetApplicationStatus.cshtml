@@ -1,0 +1,26 @@
+﻿<h2>Check Application Status</h2>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+@using (Html.BeginForm("GetApplicationStatus", "LoanApplication1", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.Label("applicationId", "Application ID:")
+        @Html.TextBox("applicationId", null, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Check Status</button>
+}
+
+@if (ViewBag.Status != null)
+{
+    <div class="alert alert-info mt-3">
+        Your application status is: @ViewBag.Status
+    </div>
+}
+@if (!string.IsNullOrEmpty(ViewBag.StatusErrorMessage))
+{
+    <div class="alert alert-danger mt-3">
+        Error: @ViewBag.StatusErrorMessage
+    </div>
+}

@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BankLoan_Management133.Repositoryy.Migrations
 {
     /// <inheritdoc />
-    public partial class r5 : Migration
+    public partial class a1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Passward",
-                table: "customers");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -52,6 +48,40 @@ namespace BankLoan_Management133.Repositoryy.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "customers",
+                columns: table => new
+                {
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KycStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_customers", x => x.CustomerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LoanProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    pname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    interest = table.Column<int>(type: "int", nullable: false),
+                    minAmount = table.Column<int>(type: "int", nullable: false),
+                    maxAmount = table.Column<int>(type: "int", nullable: false),
+                    tenure = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanProducts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,6 +190,35 @@ namespace BankLoan_Management133.Repositoryy.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LoanApplications",
+                columns: table => new
+                {
+                    applicationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    loanAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    applicationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    approvalStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanApplications", x => x.applicationId);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_LoanProducts_Id",
+                        column: x => x.Id,
+                        principalTable: "LoanProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanApplications_customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "customers",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,6 +257,16 @@ namespace BankLoan_Management133.Repositoryy.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanApplications_CustomerId",
+                table: "LoanApplications",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanApplications_Id",
+                table: "LoanApplications",
+                column: "Id");
         }
 
         /// <inheritdoc />
@@ -219,17 +288,19 @@ namespace BankLoan_Management133.Repositoryy.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "LoanApplications");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Passward",
-                table: "customers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.DropTable(
+                name: "LoanProducts");
+
+            migrationBuilder.DropTable(
+                name: "customers");
         }
     }
 }

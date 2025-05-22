@@ -1,0 +1,56 @@
+﻿ @using BankLoan_Management133.Repositoryy.Models
+@model LoanApplication
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Loan Application";
+}
+
+<h1>@ViewBag.st Loan Application</h1>
+
+<form method="post" asp-action="Index">
+    <input type="hidden" asp-for="applicationId" />
+
+    <div class="form-group">
+        <label asp-for="CustomerId">Customer ID</label>
+        <input asp-for="CustomerId" class="form-control" />
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Id">Loan Product ID</label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="loanAmount">Loan Amount</label>
+        <input asp-for="loanAmount" class="form-control" />
+        <span asp-validation-for="loanAmount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="applicationDate">Application Date</label>
+        <input asp-for="applicationDate" class="form-control" />
+        <span asp-validation-for="applicationDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="approvalStatus">Approval Status</label>
+        <select asp-for="approvalStatus" class="form-control">
+            <option value="PENDING">PENDING</option>
+            <option value="APPROVED">APPROVED</option>
+            <option value="REJECTED">REJECTED</option>
+        </select>
+        <span asp-validation-for="approvalStatus" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@ViewBag.st</button>
+    <a asp-action="Show" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

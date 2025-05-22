@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankLoan_Management133.Repositoryy.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250514105205_a9")]
-    partial class a9
+    [Migration("20250516045741_s2")]
+    partial class s2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,69 @@ namespace BankLoan_Management133.Repositoryy.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("BankLoan_Management133.Repositoryy.Models.LoanApplication", b =>
+                {
+                    b.Property<int>("applicationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("applicationId"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("applicationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("approvalStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("loanAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("applicationId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("LoanApplications");
+                });
+
+            modelBuilder.Entity("BankLoan_Management133.Repositoryy.Models.LoanApplicationEntites", b =>
+                {
+                    b.Property<int>("ApplicationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApplicationId"));
+
+                    b.Property<DateTime>("ApplicationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ApprovalStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("LoanAmount")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("ApplicationId");
+
+                    b.ToTable("loanApplicationEntites");
+                });
 
             modelBuilder.Entity("BankLoan_Management133.Repositoryy.Models.LoanProduct", b =>
                 {
@@ -283,6 +346,25 @@ namespace BankLoan_Management133.Repositoryy.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("BankLoan_Management133.Repositoryy.Models.LoanApplication", b =>
+                {
+                    b.HasOne("BankLoan_Management133.Repositoryy.Models.customer", "customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BankLoan_Management133.Repositoryy.Models.LoanProduct", "LoanProduct")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LoanProduct");
+
+                    b.Navigation("customer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

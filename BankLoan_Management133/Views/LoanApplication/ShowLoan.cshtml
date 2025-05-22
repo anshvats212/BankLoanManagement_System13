@@ -1,0 +1,66 @@
+﻿@using BankLoan_Management133.Repositoryy.Models
+@model IEnumerable<LoanApplication> // Or List<LoanApplication>
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Loan Applications";
+}
+
+    <h1>Loan Applications</h1>
+
+    <p>
+        <a asp-action="Index" class="btn btn-primary">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                @Html.DisplayNameFor(model => model.applicationId)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.loanAmount)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.applicationDate)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.approvalStatus)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.applicationId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.loanAmount)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.applicationDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.approvalStatus)
+                    </td>
+                    <td>
+                        <a asp-action="Index" asp-route-id="@item.applicationId" class="btn btn-primary">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.applicationId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+        }
+        </tbody>
+    </table>

@@ -1,0 +1,44 @@
+﻿@model BankLoan_Management133.Repositoryy.Models.LoanApplicationEntites // Or a ViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<h2>Apply for a Loan</h2>
+
+@using (Html.BeginForm("Apply", "LoanApplication1", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CustomerId, "Customer ID")
+        @Html.TextBoxFor(model => model.CustomerId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CustomerId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Id, "Loan Product ID")
+        @Html.TextBoxFor(model => model.Id, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Id)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LoanAmount, "Loan Amount")
+        @Html.TextBoxFor(model => model.LoanAmount, new { @class = "form-control", type = "number", step = "0.01" })
+        @Html.ValidationMessageFor(model => model.LoanAmount)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Application</button>
+}
+
+@if (ViewBag.ApplicationId != null)
+{
+    <div class="alert alert-success mt-3">
+        Your loan application has been submitted successfully. Your Application ID is: @ViewBag.ApplicationId
+    </div>
+}
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger mt-3">
+        Error: @ViewBag.ErrorMessage
+    </div>
+}
