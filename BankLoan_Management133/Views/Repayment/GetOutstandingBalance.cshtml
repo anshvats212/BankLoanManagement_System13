@@ -1,0 +1,33 @@
+﻿@* @{ *@
+@*     ViewData["Title"] = "Outstanding Balance"; *@
+@* } *@
+
+@* <h1>Outstanding Balance</h1> *@
+
+@* <div> *@
+@*     <p>The outstanding balance for Loan Application ID: @ViewBag.OutstandingBalance</p> *@
+@*     <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Back</a> *@
+@* </div> *@
+
+@{
+    ViewData["Title"] = "Outstanding Balance";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-warning">Outstanding Balance</h2>
+    <div class="card shadow-sm p-4 rounded bg-light">
+        <p class="mb-0 lead">
+            The outstanding balance for Loan Application ID:
+            <span class="fw-bold text-success">₹@ViewBag.OutstandingBalance</span>
+        </p>
+    </div>
+    <div class="mt-4">
+        <a href="@ViewBag.ReturnUrl" class="btn btn-secondary btn-lg">
+            <i class="bi bi-arrow-left me-2"></i> Back
+        </a>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
+}

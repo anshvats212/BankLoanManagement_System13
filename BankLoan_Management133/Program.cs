@@ -38,6 +38,9 @@ builder.Services.AddScoped<ILoanProductService, LoanProductService>();
 builder.Services.AddScoped<ILoanApplicationRepository1, LoanApplicationRepository1>();
 builder.Services.AddScoped<ILoanApplicationService1, LoanApplicationService1>();
 
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+builder.Services.AddScoped<IRepaymentRepository, RepaymentRepository>();
+builder.Services.AddScoped<IRepaymentService, RepaymentService>();
 
 var app = builder.Build();
 
