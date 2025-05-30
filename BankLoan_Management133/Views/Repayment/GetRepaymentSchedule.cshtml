@@ -142,7 +142,7 @@
 @* } *@
 
 
-@model IEnumerable<LoanApplication.Models.Repayment>
+@model IEnumerable<BankLoan_Management133.Models.Repayment>
 
 @{
     ViewData["Title"] = "Repayment Schedule";
@@ -204,7 +204,7 @@
                                 @Html.DisplayFor(modelItem => item.PaymentStatus)
                             </td>
                             <td>
-                                @if (item.PaymentStatus == LoanApplication.Models.PaymentStatus.PENDING)
+                                @if (item.PaymentStatus == BankLoan_Management133.Models.PaymentStatus.PENDING)
                                 {
                                     <a asp-action="ProcessPayment" asp-route-repaymentId="@item.RepaymentId" class="btn btn-sm btn-primary">
                                         <i class="bi bi-credit-card me-1"></i> Pay Now
