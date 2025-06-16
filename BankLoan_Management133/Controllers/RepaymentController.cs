@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using BankLoan_Management133.Models;
 using BankLoan_Management133.BusinessLogicc;
 
 namespace BankLoan_Management133.Controllers
@@ -12,7 +13,7 @@ namespace BankLoan_Management133.Controllers
             _repaymentService = repaymentService;
         }
 
-        [HttpGet]
+        [HttpGet("Repayment/Schedule/{id}")]
         public async Task<IActionResult> GetRepaymentSchedule(int id)
         {
             var repaymentSchedule = await _repaymentService.GetRepaymentScheduleAsync(id);
@@ -25,17 +26,16 @@ namespace BankLoan_Management133.Controllers
             return View(repaymentSchedule);
         }
 
-
-        [HttpGet]
+        [HttpGet("Repayment/OutstandingBalance/{applicationId}")]
         public IActionResult GetOutstandingBalance(int applicationId, string returnUrl = null)
         {
             decimal outstandingBalance = _repaymentService.GetOutstandingBalance(applicationId);
             ViewBag.OutstandingBalance = outstandingBalance;
-            ViewBag.ReturnUrl = returnUrl; // Store the return URL in ViewBag
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("Repayment/ProcessPayment/{repaymentId}")]
         public async Task<IActionResult> ProcessPayment(int repaymentId)
         {
             var repayment = await _repaymentService.GetRepaymentByIdAsync(repaymentId);
@@ -43,15 +43,15 @@ namespace BankLoan_Management133.Controllers
             if (repayment == null)
             {
                 TempData["ErrorMessage"] = "Invalid repayment ID.";
-                return RedirectToAction(nameof(GetRepaymentSchedule), new { id = repayment?.ApplicationId });
+                return RedirectToAction("Index", "Home"); // Or another appropriate action
             }
 
             return View(repayment);
         }
 
-        [HttpPost]
+        [HttpPost("Repayment/ProcessPayment/{repaymentId}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProcessPayment(int repaymentId, [Bind("RepaymentId")] BankLoan_Management133.Models.Repayment repayment)
+        public async Task<IActionResult> ProcessPayment(int repaymentId, [Bind("RepaymentId")] Repayment repayment)
         {
             if (repaymentId != repayment.RepaymentId)
             {
@@ -65,14 +65,14 @@ namespace BankLoan_Management133.Controllers
                 return NotFound();
             }
 
-            if (repaymentToUpdate.PaymentStatus == BankLoan_Management133.Models.PaymentStatus.COMPLETED)
+            if (repaymentToUpdate.PaymentStatus == PaymentStatus.COMPLETED)
             {
                 TempData["ErrorMessage"] = "This payment has already been processed.";
                 return RedirectToAction(nameof(GetRepaymentSchedule), new { id = repaymentToUpdate.ApplicationId });
             }
 
             repaymentToUpdate.PaymentDate = DateTime.Now;
-            repaymentToUpdate.PaymentStatus = BankLoan_Management133.Models.PaymentStatus.COMPLETED;
+            repaymentToUpdate.PaymentStatus = PaymentStatus.COMPLETED;
 
             await _repaymentService.UpdateRepaymentAsync(repaymentToUpdate);
             TempData["SuccessMessage"] = "Payment processed successfully!";

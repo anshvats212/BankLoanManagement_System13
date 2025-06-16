@@ -1,9 +1,6 @@
 ﻿using BankLoan_Management133.BusinessLogicc;
 using BankLoan_Management133.Repositoryy.Models; // Make sure this namespace is included
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering; // For SelectList
-using System;
-using System.Threading.Tasks; // For asynchronous operations (recommended for data access)
 
 namespace BankLoan_Management133.Controllers
 {
@@ -150,4 +147,4 @@ namespace BankLoan_Management133.Controllers
         }
     }
 }
-    
+

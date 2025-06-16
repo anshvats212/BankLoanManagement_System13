@@ -1,9 +1,5 @@
 ﻿using BankLoan_Management133.Models;
-using BankLoan_Management133.Repositoryy.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 
 namespace BankLoan_Management133.Repositoryy.Models
 {
@@ -37,7 +33,7 @@ namespace BankLoan_Management133.Repositoryy.Models
         {
             return _context.loanApplicationEntites.Find(applicationId);
         }
-         // Implement the GetAll method:
+        // Implement the GetAll method:
         public IEnumerable<LoanApplicationEntites> GetAll()
         {
             return _context.loanApplicationEntites.ToList();

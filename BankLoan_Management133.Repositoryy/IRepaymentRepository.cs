@@ -1,4 +1,6 @@
-﻿using BankLoan_Management133.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BankLoan_Management133.Models;
 
 namespace BankLoan_Management133.Repositoryy
 {

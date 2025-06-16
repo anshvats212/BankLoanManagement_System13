@@ -11,9 +11,6 @@ namespace BankLoan_Management133.Models
 
         public DbSet<customer> customers { get; set; }
         public DbSet<LoanProduct> LoanProducts { get; set; }
-
-        public DbSet<Loan> Loans { get; set; }
-
         public DbSet<Repayment> Repayments { get; set; } 
 public DbSet<LoanApplicationEntites> loanApplicationEntites { get; set; } 
     }
