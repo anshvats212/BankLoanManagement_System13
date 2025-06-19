@@ -1,33 +1,43 @@
-﻿@* @{ *@
-@*     ViewData["Title"] = "Outstanding Balance"; *@
-@* } *@
-
-@* <h1>Outstanding Balance</h1> *@
-
-@* <div> *@
-@*     <p>The outstanding balance for Loan Application ID: @ViewBag.OutstandingBalance</p> *@
-@*     <a href="@ViewBag.ReturnUrl" class="btn btn-secondary">Back</a> *@
-@* </div> *@
-
-@{
+﻿@{
     ViewData["Title"] = "Outstanding Balance";
+    decimal outstandingBalance = (decimal)ViewBag.OutstandingBalance;
+    string returnUrl = ViewBag.ReturnUrl;
 }
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-warning">Outstanding Balance</h2>
-    <div class="card shadow-sm p-4 rounded bg-light">
-        <p class="mb-0 lead">
-            The outstanding balance for Loan Application ID:
-            <span class="fw-bold text-success">₹@ViewBag.OutstandingBalance</span>
-        </p>
+<h1>Outstanding Balance</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
     </div>
-    <div class="mt-4">
-        <a href="@ViewBag.ReturnUrl" class="btn btn-secondary btn-lg">
-            <i class="bi bi-arrow-left me-2"></i> Back
-        </a>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="card">
+    <div class="card-header">
+        Loan Application ID: @ViewContext.RouteData.Values["applicationId"]
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Current Outstanding Balance:</h5>
+        <p class="card-text">
+            <strong>@outstandingBalance.ToString("C")</strong>
+        </p>
     </div>
 </div>
 
-@section Styles {
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
-}
+<div class="mt-3">
+    @if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+    {
+        <a href="@returnUrl" class="btn btn-secondary">Back</a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to Home</a>
+    }
+</div>

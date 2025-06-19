@@ -9,12 +9,13 @@ namespace BankLoan_Management133.Repositoryy.Models
         [Key]
         public int ApplicationId { get; set; }
 
-        [ForeignKey("customer")]   [Required] // Navigation property name, see below
+        [ForeignKey("customer")]
+        [Required]
         public int CustomerId { get; set; }
 
-        [ForeignKey("LoanProduct")]   [Required] // Navigation property name, see below
-        public int Id { get; set; }
-
+        [ForeignKey("LoanProduct")]
+        [Required]
+        public int Id { get; set; } // This is likely LoanProductId
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")] // Specify precision and scale
@@ -25,13 +26,25 @@ namespace BankLoan_Management133.Repositoryy.Models
 
         [Required]
         [MaxLength(20)] // Add a max length for the string
-        public string ApprovalStatus { get; set; } // Use string for status, more flexible.  Consider an Enum in a real app.
+        public string ApprovalStatus { get; set; } // Use string for status, more flexible. Consider an Enum in a real app.
 
-        // Add a default constructor.  This is VERY important for EF to work correctly.
+
+
+        //----------------------------------------------------------------------------------------------------------------------------
+
+        // --- NEW PROPERTIES FOR REPAYMENT CALCULATION ---
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal InterestRate { get; set; } // Add this
+
+        [Required]
+        public int TermInMonths { get; set; } // Add this
         public LoanApplicationEntites()
         {
             this.ApplicationDate = DateTime.Now; // Initialize to current date/time
-            this.ApprovalStatus = "PENDING";  // Set default status
+            this.ApprovalStatus = "PENDING"; // Set default status
+            this.InterestRate = 0.0m; // Default or fetched from LoanProduct
+            this.TermInMonths = 0; // Default or fetched from LoanProduct
         }
     }
 }

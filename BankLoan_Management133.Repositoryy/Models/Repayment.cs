@@ -1,15 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BankLoan_Management133.Models
 {
-    
     public class Repayment
     {
         [Key]
         public int RepaymentId { get; set; }
 
-        [ForeignKey("Loan")] // Assuming you have a LoanApplication model
+        [ForeignKey("LoanApplication")] // Links to the loan application
         public int ApplicationId { get; set; }
 
         [Required]
@@ -23,9 +23,6 @@ namespace BankLoan_Management133.Models
 
         [Required]
         public PaymentStatus PaymentStatus { get; set; }
-
-        // Navigation property (if you have a Loan model)
-        public Loan? Loan { get; set; }
     }
 
     public enum PaymentStatus

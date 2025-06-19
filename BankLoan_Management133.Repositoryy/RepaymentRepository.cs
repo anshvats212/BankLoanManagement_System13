@@ -1,7 +1,6 @@
 ﻿using BankLoan_Management133.Models;
-using BankLoan_Management133.Repositoryy;
 
-namespace BankLoan_Management133.Repository
+namespace BankLoan_Management133.Repositoryy
 {
     public class RepaymentRepository : IRepaymentRepository
     {
@@ -15,9 +14,9 @@ namespace BankLoan_Management133.Repository
         public List<Repayment> GetRepaymentSchedule(int applicationId)
         {
             return _dbContext.Repayments
-                            .Where(r => r.ApplicationId == applicationId)
-                            .OrderBy(r => r.DueDate)
-                            .ToList();
+                                .Where(r => r.ApplicationId == applicationId)
+                                .OrderBy(r => r.DueDate)
+                                .ToList();
         }
 
         public void AddRepayments(List<Repayment> repayments)
@@ -40,8 +39,8 @@ namespace BankLoan_Management133.Repository
         public decimal GetOutstandingBalance(int applicationId)
         {
             return _dbContext.Repayments
-                            .Where(r => r.ApplicationId == applicationId && r.PaymentStatus == PaymentStatus.PENDING)
-                            .Sum(r => r.AmountDue);
+                                .Where(r => r.ApplicationId == applicationId && r.PaymentStatus == PaymentStatus.PENDING)
+                                .Sum(r => r.AmountDue);
         }
     }
 }

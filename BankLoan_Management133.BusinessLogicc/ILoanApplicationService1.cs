@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using BankLoan_Management133.Models;
-using BankLoan_Management133.Repositoryy.Models;
+﻿using BankLoan_Management133.Repositoryy.Models;
 
 namespace BankLoan_Management133.BusinessLogicc
 {
